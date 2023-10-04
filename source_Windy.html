@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html lang="vi" id="device-desktop" class="target-index" style="--vh: 6.3px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Windy: Wind map &amp; weather forecast</title>
+    <base href=".">
+    <link rel="canonical" href="https://www.windy.com/">
+    <link rel="stylesheet" href="./Windy_ Wind map &amp; weather forecast_files/leaflet140_patched_tileLayer.v17.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="./Windy_ Wind map &amp; weather forecast_files/leaflet140_patched_tileLayer.v17.js.tải xuống"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    
+    <!-- Stylesheets -->
+    <link href="./Windy_ Wind map &amp; weather forecast_files/index.css" rel="stylesheet" type="text/css">
+
+    <!-- JavaScript Variables -->
+    <script>
+        window.W = {
+            version: "40.0.2",
+            assets: "40.0.2.ind.8e17",
+            target: "index",
+            build: "2023-10-03, 10:39",
+            startTs: Date.now(),
+            detectedDevice: "mobile"
+        };
+
+        try {
+            (function () {
+                var screenWidth = window.screen.width;
+                var screenHeight = window.screen.height;
+                var minDimension = Math.min(screenWidth, screenHeight);
+                var maxDimension = Math.max(screenWidth, screenHeight);
+                var isMobileDevice = /iPhone|iPod|iPad|ios|android/i.test(window.navigator.userAgent);
+                var hasTouchScreen = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+                var deviceType;
+
+                if (window.W.target === "mobile") {
+                    deviceType = minDimension <= 500 ? "mobile" : "tablet";
+                } else {
+                    if (maxDimension <= 600 || (maxDimension <= 960 && minDimension <= 600) || (minDimension <= 500 && isMobileDevice)) {
+                        deviceType = "mobile";
+                    } else if ((maxDimension <= 1024 || minDimension <= 1080) && isMobileDevice && hasTouchScreen) {
+                        deviceType = "tablet";
+                    } else {
+                        deviceType = "desktop";
+                    }
+                }
+
+                document.documentElement.id = "device-" + deviceType;
+                document.documentElement.className = "target-index";
+                window.W.detectedDevice = deviceType;
+            })();
+        } catch (e) {}
+    </script>
+
+    <!-- Metadata -->
+    <meta name="minifest-ecmwf-hres" content="{&quot;dst&quot;:[[3,3,90],[3,93,144],[6,150,240]],&quot;info&quot;:&quot;2023091900&quot;,&quot;ref&quot;:&quot;2023-10-03T12:00:00Z&quot;,&quot;update&quot;:&quot;2023-10-03T19:33:41Z&quot;,&quot;v&quot;:&quot;2.4&quot;}">
+    <meta name="minifest-ecmwf-hres-premium" content="{&quot;dst&quot;:[[1,1,90],[3,93,138],[6,144,234]],&quot;info&quot;:&quot;2023091900&quot;,&quot;ref&quot;:&quot;2023-10-03T18:00:00Z&quot;,&quot;update&quot;:&quot;2023-10-04T00:49:25Z&quot;,&quot;v&quot;:&quot;2.4&quot;}">
+    <meta name="model" content="ecmwf">
+    <meta name="geoip" content="113.161.86.33,10.8326,106.6581,VN,Ho Chi Minh City">
+    <meta name="token" content="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2OTYzODcwNDAsImV4cCI6MTY5NjU1OTg0MCwiaW5mIjp7ImlwIjoiMTEzLjE2MS44Ni4zMyIsInVhIjoiTW96aWxsYVwvNS4wKlNhbiBPbmxpbmUgV29yaw0vMTAuMC4wOyBXaW5k5FdpbjQ2NDsyKCBPcGVyYXRpb249Y2xpZW50XzUzNy4zNiBFZGc0LjQ3JmVuY3J5cHQ9V0lUQU5EK0lTT1MmIEFwcGxlV2ViS2l0XyxcLzUzNy4zNiBFZGdcLzExNy4wLjAuMCBTYWZhcmlcLzUzNy4zNiBFZGc0LjQ3KX0sIlF1ZXN0aW9uX2lkIjoiNWU4MDkwNDNlYmMyODViOGJiN2YwNDMyXzE4MDM0NzQ0MjAiLCJyZXNpZCI6IjIwMjMzMTc0IiwiaW1kIjoiMTEzLjE2MS44Ni4zMyIsImFwcCI6IjQyNjA4NzA0MjE2NDU4In0.Mc_Bj_iV-rIv2pxgEkObW2RzGTHlF5n8Av2atE1zU0U">
+
+    <!-- JavaScript -->
+    <script src="./Windy_ Wind map &amp; weather forecast_files/leaflet140_patched_tileLayer.v17.js.tải xuống"></script>
+    <script>
+        Array.prototype.includes && Object.assign && window.Promise || document.write('<script src="js/polyfills.v13.js"><\/script>')
+    </script>
+    <script src="./Windy_ Wind map &amp; weather forecast_files/index.js.tải xuống" async=""></script>
+
+    <!-- DNS Prefetch Links -->
+    <link rel="dns-prefetch" href="https://node.windy.com/">
+    <link rel="dns-prefetch" href="https://account.windy.com/">
+    <link rel="dns-prefetch" href="https://tiles.windy.com/">
+    <link rel="dns-prefetch" href="https://ims.windy.com/">
+    <link rel="dns-prefetch" href="https://ims-s.windy.com/">
+    <link rel="dns-prefetch" href="https://img.windy.com/">
+    <link rel="dns-prefetch" href="https://account.windy.com/">
+    
+    <!-- Description and Keywords -->
+    <meta name="description" content="Weather radar, wind and waves forecast for kiters, surfers, paragliders, pilots, sailors and anyone else. Worldwide animated weather map, with easy to use layers and precise spot forecast. METAR, TAF and NOTAMs for any airport in the World. SYNOP codes from weather stations and buoys. Forecast models ECMWF, GFS, NAM and NEMS">
+    <meta name="keywords" content="Windyty, Windytv, windy app, wind map, windfinder, windguru, wind forecast, weather forecast, GFS, ECMWF, NEMS, METAR, TAF">
+    <meta name="author" content="Windyty, SE">
+    <meta name="application-name" content="Windy.com">
+    
+    <!-- Open Graph and Twitter Metadata -->
+    <meta property="fb:app_id" content="426030704216458">
+    <meta property="og:title" content="Windy as forecasted">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://www.windy.com/img/socialshare3.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="373">
+    <meta property="og:url" content="https://www.windy.com/">
+    <meta property="og:description" content="Wind map and weather forecast">
+    <meta property="og:site_name" content="Windy.com/">
+    <meta property="article:published_time" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Windy as forecasted">
+    <meta name="twitter:site" content="@windycom">
+    <meta name="twitter:creator" content="@windycom">
+    <meta name="twitter:url" content="https://www.windy.com/">
+    <meta name="twitter:description" content="Wind map and weather forecast">
+    <meta name="twitter:image" content="https://www.windy.com/img/socialshare3.jpg">
+    
+    <!-- Favicon and Apple Touch Icons -->
+    <link rel="shortcut icon" type="image/png" href="https://www.windy.com/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://img.windy.com/albums/icons/logo-full.png?w=57">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://img.windy.com/albums/icons/logo-full.png?w=60">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://img.windy.com/albums/icons/logo-full.png?w=72">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://img.windy.com/albums/icons/logo-full.png?w=76">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://img.windy.com/albums/icons/logo-full.png?w=114">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://img.windy.com/albums/icons/logo-full.png?w=120">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://img.windy.com/albums/icons/logo-full.png?w=144">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://img.windy.com/albums/icons/logo-full.png?w=152">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.windy.com/albums/icons/logo-full.png?w=180">
+    
+    <!-- MS Tile Icon -->
+    <meta name="msapplication-TileColor" content="#9d0300">
+    <meta name="msapplication-TileImage" content="https://img.windy.com/albums/icons/mstile-144x144.png">
+    
+    <!-- Chrome Web Store Link -->
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/kfboghlfmbkcjhddfklnbpobkajncacl">
+    
+    <!-- Apple iTunes App -->
+    <meta name="apple-itunes-app" content="app-id=1161387262">
+    
+    <!-- Apple Mobile Web App Capable -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#9d0300">
+    
+    <!-- Manifest Link -->
+    <link rel="manifest" href="https://www.windy.com/v/40.0.2.ind.8e17/manifest.json">
+    
+    <!-- Scripts -->
+    <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/hp-weather.js.tải xuống"></script>
+    <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/rhpane.js.tải xuống"></script>
+    <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/patch.js.tải xuống"></script>
+    <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/gl-particles.js.tải xuống"></script>
+    <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/progress-bar.js.tải xuống"></script>
+    <style id="plugin-css-rhpane">
+        .loading-overlay #rhpane #overlay a.selected .menu-text::before {
+            animation: rotate 0.75s infinite linear;
+            border: 0.1em solid #946051;
+            border-radius: 50%;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            content: '';
+            height: 0.8em;
+            width: 0.8em;
+        }
+    
+        #rh-bottom {
+            display: flex;
+            flex-direction: column;
+            width: 320px;
+            margin: 0 8px 8px auto;
+            position: relative;
+            white-space: nowrap;
+            pointer-events: auto;
+        }
+    
+        #rh-bottom .rh-text {
+            font-size: 11px;
+            text-transform: lowercase;
+            display: inline-block;
+            white-space: nowrap;
+            margin: 0 7.5px;
+        }
+    
+        #rh-bottom .rh-inlined {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    
+        #rh-bottom .rh-absoluted {
+            position: absolute;
+            bottom: 100%;
+            padding: 15px 0;
+        }
+    
+        #rh-bottom .rh-transparent {
+            opacity: 0.7;
+        }
+    
+        .product-drought #rh-bottom .rh-absoluted {
+            padding: 0;
+        }
+    
+        .product-drought #rh-bottom .rh-transparent {
+            opacity: 1;
+        }
+    
+        #rh-bottom #radar-blitz-sound,
+        #rh-bottom #radar-blitz {
+            display: none;
+        }
+    
+        .hide-particles #rh-bottom #particles {
+            display: none;
+        }
+    
+        #rh-bottom #fullscreen {
+            font-size: 16px;
+            margin-right: 16px;
+        }
+    
+        #rh-bottom #info-icon {
+            font-size: 19px;
+            position: relative;
+            top: 2px;
+        }
+    
+        #rh-bottom #info-icon .premium-info-promo {
+            background-color: #d49500;
+            color: white;
+            text-shadow: none;
+            font-size: 12px;
+            padding: 0.5em 1em;
+            border-radius: 0.5em;
+            animation: fadein-full 3s;
+            display: none;
+            position: absolute;
+            line-height: 1;
+            padding: 4px 10px 5px 10px;
+            top: -100%;
+            white-space: nowrap;
+            right: -10px;
+            margin-top: -10px;
+            margin-right: 10px;
+            border-radius: 3px;
+            z-index: 98;
+            text-transform: none;
+        }
+    
+        #rh-bottom #info-icon .premium-info-promo::before {
+            content: '';
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 100%;
+            right: 5px;
+            z-index: 99;
+            line-height: 1;
+            border: solid transparent;
+            border-top-color: #d49500;
+            border-left-color: transparent;
+            border-width: 5px;
+        }
+    
+        #rh-bottom #info-icon .premium-info-promo .reftime-closing-x {
+            font-family: iconfont;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            color: white;
+            background-color: #9d0300;
+            cursor: pointer;
+            -webkit-tap-highlight-color: initial;
+            position: absolute;
+            margin: 10px;
+            font-size: 40px;
+            right: -1em;
+            z-index: 10;
+            width: 1em;
+            height: 1em;
+            border-radius: 1em;
+            display: none;
+            display: inline-block;
+            background: none;
+            font-size: 12px;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            right: -0.25em;
+            font-weight: bold;
+            top: 1px;
+        }
+    
+        #rh-bottom #info-icon .premium-info-promo .reftime-closing-x::before {
+            content: '\e013';
+        }
+    
+        #rh-bottom #legend {
+            cursor: pointer;
+            -webkit-tap-highlight-color: initial;
+            transition: 0.3s opacity;
+            margin-bottom: 5px;
+            border-radius: 20px;
+        }
+    
+        #rh-bottom #legend.one-metric {
+            pointer-events: none;
+        }
+    
+        #rh-bottom #legend.animate {
+            opacity: 0;
+        }
+    
+        #rh-bottom #legend span:first-child {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+    
+        #rh-bottom #legend span:last-child {
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+    
+        #rh-bottom #pois-wrapper,
+        #rh-bottom #product-switch {
+            width: 100%;
+            position: relative;
+            margin-bottom: 10px;
+        }
+    
+        #rh-bottom #pois-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        #rh-bottom #pois-wrapper #pois-switch {
+            padding: 0;
+        }
+    
+        #rh-bottom #pois-wrapper:has(#pois-extended-checkbox div) #pois-switch {
+            padding: 0.5em;
+            padding-bottom: 0.25em;
+        }
+    
+        #rh-bottom #pois-switch {
+            background-color: transparent;
+        }
+    
+        #rh-bottom #pois-switch div {
+            padding: 0.25em 0;
+        }
+    
+        #rh-bottom #pois-switch div[data-tooltip]:hover::after {
+            bottom: 100%;
+            top: inherit;
+            margin-bottom: 5px;
+            left: inherit;
+            right: -10px;
+            display: inline-table;
+            padding: 3px 15px;
+        }
+    
+        #rh-bottom #pois-switch div[data-tooltip]:hover::before {
+            bottom: 100%;
+            top: inherit;
+            left: 50%;
+            margin-left: -5px;
+            margin-bottom: -5px;
+            border-top-color: #4d4d4d;
+            border-left-color: transparent;
+        }
+    
+        #rh-bottom #pois-switch span {
+            font-size: 12px;
+        }
+    
+        #rh-bottom #pois-extended-checkbox {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0.5em;
+            padding-top: 0.25em;
+        }
+    
+        #rh-bottom #product-switch[data-tooltip]:hover::after {
+            margin-right: 3px;
+        }
+    
+        #rh-bottom #product-switch > div,
+        #rh-bottom #product-switch span {
+            white-space: nowrap;
+            padding: 0.3em 0.7em;
+        }
+    
+        #rh-bottom #product-switch > div small,
+        #rh-bottom #product-switch span small {
+            margin-left: 2px;
+            font-size: 0.6em;
+            opacity: 0.7;
+        }
+    
+        #rh-bottom #product-switch.unwrapped {
+            display: block;
+            white-space: unset;
+            padding: 0.5em;
+            border-radius: 12px;
+        }
+    
+        #rh-bottom #product-switch.unwrapped > div {
+            display: block;
+            float: left;
+            margin-right: 4px;
+            margin-bottom: 2px;
+            padding: 0.3em 1em;
+        }
+    
+        #rh-bottom #product-switch.unwrapped > div small {
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+    
+        .product-drought #rh-bottom #product-switch,
+        .product-fireDanger #rh-bottom #product-switch,
+        .product-efi #rh-bottom #product-switch {
+            display: none;
+        }
+    
+        #rh-bottom #rh-bottom-add-webcam {
+            text-shadow: 0px 0px 4px black;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+    
+        #rh-bottom #rh-bottom-add-webcam .add-webcam__icon {
+            font-size: 24px;
+        }
+    
+        #rh-bottom #rh-bottom-add-webcam .add-webcam__icon:before {
+            display: block;
+        }
+    
+        #rh-bottom #rh-bottom-add-webcam .add-webcam__text {
+            margin-left: 1rem;
+        }
+    
+        body.overlay-radar #rh-bottom #rh-bottom-add-webcam,
+        body.overlay-satellite #rh-bottom #rh-bottom-add-webcam {
+            display: none;
+        }
+    
+        @media (max-height: 720px) {
+            #rh-bottom #rh-bottom-add-webcam {
+                display: none;
+            }
+        }
+    
+        #rh-bottom .rh-bottom__controls {
+            display: flex;
+            flex-wrap: wrap-reverse;
+        }
+    
+        .overlay-map #rh-bottom .rh-bottom__controls {
+            order: -1;
+        }
+    
+        #rh-bottom .rh-bottom__switches {
+            margin: 0 -7.5px 10px;
+        }
+    
+        #rh-bottom .rh-bottom__icons {
+            display: flex;
+            align-items: center;
+            margin: 0 -7.5px 10px auto;
+        }
+    
+        #rh-bottom .rh-bottom__icons > * {
+            line-height: 1;
+        }
+    
+        #plugin-rhpane {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            justify-content: flex-end;
+        }
+    
+        #rhpane {
+            justify-content: flex-start;
+            align-self: flex-end;
+            position: relative;
+            pointer-events: none;
+            flex-grow: 1;
+            margin-left: auto;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            margin-right: 8px;
+        }
+    
+        #rhpane .zoom-ctrl {
+            width: 25px;
+            height: 25px;
+            border-radius: 25px;
+            background-color: rgba(68, 65, 65, 0.84);
+            margin-bottom: 4px;
+            text-align: center;
+            align-self: flex-end;
+            pointer-events: auto;
+            font-size: 16px;
+            line-height: 1.65;
+        }
+    
+        #rhpane .zoom-ctrl:hover {
+            background-color: rgba(183, 183, 183, 0.39);
+        }
+    
+        #rhpane .zoom-ctrl.globe-open {
+            font-size: 13px;
+            line-height: 1.95;
+        }
+    
+        #rhpane .zoom-ctrl.globe-close {
+            display: none;
+        }
+    
+        #rhpane .zoom-ctrl.globe-open,
+        #rhpane .zoom-ctrl.globe-close {
+            margin-top: 4px;
+            position: relative;
+        }
+    
+        #rhpane .zoom-ctrl.globe-open .premium-flag,
+        #rhpane .zoom-ctrl.globe-close .premium-flag {
+            top: -3px;
+            right: -5px;
+            font-size: 13px;
+        }
+    
+        #rhpane .zoom-ctrl.hurricanes-close {
+            display: none;
+            background-color: rgba(68, 65, 65, 0.84);
+        }
+    
+        .onhurricanes #rhpane .zoom-ctrl.hurricanes-close {
+            box-shadow: 0 0 4px 0 black;
+            display: block;
+            background-color: #d49500;
+        }
+    
+        .onhurricanes #rhpane .zoom-ctrl.hurricanes-open {
+            display: none;
+        }
+    
+        .onhurricanes #rhpane .zoom-ctrl.hurricanes-open:hover {
+            background-color: rgba(68, 65, 65, 0.84);
+        }
+    
+        #rhpane #overlay {
+            width: 25px;
+            margin-bottom: 25px;
+            margin-top: 8px;
+            font-size: 16px;
+            align-self: flex-end;
+            pointer-events: auto;
+        }
+    
+        #rhpane #overlay a {
+            padding: 0;
+            margin: 0.15em 0;
+            color: #fff3e1;
+        }
+    
+        #rhpane #overlay a .iconfont,
+        #rhpane #overlay a .menu-text {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    
+        #rhpane #overlay a .iconfont {
+            height: 25px;
+            width: 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+    
+        #rhpane #overlay a .menu-text {
+            height: 22px;
+            transition: background-color 0.3s;
+            position: absolute;
+            text-shadow: 0px 0px 4px black;
+            right: 25px;
+            line-height: 1.4;
+            padding-left: 11px;
+            padding-right: 11px;
+            margin-top: 1.5px;
+            right: 22px;
+            top: 0;
+            border-radius: 1.2em;
+        }
+    
+        #rhpane #overlay a .menu-text span {
+            display: none;
+        }
+    
+        .onglobe #rhpane #overlay a.globe-not-supported {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    
+        #rhpane #overlay a.selected {
+            background: none;
+        }
+    
+        #rhpane #overlay a.selected .menu-text {
+            text-decoration: underline;
+        }
+    
+        #rhpane #overlay a.selected .menu-text span {
+            display: inline;
+        }
+    
+        #rhpane #overlay a.selected .iconfont {
+            background-color: #d49500;
+            box-shadow: 0 0 4px 0 black;
+            color: white;
+        }
+    
+        .loading-overlay #rhpane #overlay a.selected .menu-text::before {
+            pointer-events: none;
+            border-left-color: #f8f8f8;
+            border-bottom-color: #f8f8f8;
+            display: block;
+            position: absolute;
+            left: -15px;
+            top: 5px;
+            font-size: 14px;
+        }
+    
+        #rhpane #overlay a.sub-menu {
+            transition-property: visibility, height, max-height, padding, margin;
+            transition-duration: 150ms, 150ms, 150ms, 150ms, 150ms;
+            transition-delay: 150ms, 0ms, 0ms, 0ms, 0ms;
+            visibility: visible;
+            max-height: 25px;
+        }
+    
+        #rhpane #overlay a.sub-menu .iconfont {
+            font-size: 0.875em;
+            max-height: 22px;
+        }
+    
+        #rhpane #overlay a.sub-menu .menu-text {
+            font-size: 0.7em;
+            line-height: 1.8;
+            max-height: 25px;
+        }
+    
+        #rhpane #overlay a.sub-menu:not(.menu-unfold) {
+            max-height: 0;
+            margin: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transition-delay: 0ms, 0ms, 0ms, 0ms, 0ms;
+        }
+    
+        #rhpane #overlay a.sub-menu:not(.menu-unfold) .iconfont {
+            max-height: 0;
+        }
+    
+        #rhpane #overlay a.sub-menu:not(.menu-unfold) .menu-text {
+            max-height: 0;
+        }
+    
+        #rhpane #overlay a:hover .menu-text {
+            background-color: rgba(68, 65, 65, 0.84);
+        }
+    
+        #rhpane #overlay #ovr-menu .iconfont {
+            transition: all 0.3s;
+        }
+    
+        #rhpane #overlay::after,
+        #rhpane #overlay::before {
+            position: absolute;
+            top: -3px;
+            bottom: -3px;
+            right: 0;
+            content: '';
+        }
+    
+        #rhpane #overlay::before {
+            left: 0;
+            width: 25px;
+            background-color: rgba(68, 65, 65, 0.84);
+            border-radius: 25px;
+        }
+    
+        #rhpane #overlay::after {
+            width: 100px;
+            z-index: -10;
+        }
+    
+        #rhpane #overlay.iconsize-6 a {
+            margin: 0;
+        }
+    
+        #rhpane #overlay.iconsize-5 a {
+            margin: 0;
+            font-size: 14px;
+        }
+    
+        #rhpane #overlay.iconsize-5 a .iconfont {
+            height: 21px;
+        }
+    
+        #rhpane #overlay.iconsize-5 a .menu-text {
+            height: 19px;
+        }
+    
+        #rhpane #overlay.iconsize-5 a.menu-unfold {
+            max-height: 21px;
+        }
+    
+        #rhpane #overlay.iconsize-5 a.menu-unfold .menu-text {
+            height: 19px;
+        }
+    
+        #rhpane #overlay.iconsize-5 a.menu-unfold .iconfont {
+            max-height: 21px;
+        }
+    
+        #rhpane #overlay.iconsize-4 a {
+            margin: 0;
+            font-size: 12px;
+        }
+    
+        #rhpane #overlay.iconsize-4 a .iconfont,
+        #rhpane #overlay.iconsize-4 a .menu-text {
+            height: 17px;
+        }
+    
+        #rhpane #overlay.iconsize-4 a.menu-unfold {
+            max-height: 17px;
+        }
+    
+        #rhpane #overlay.iconsize-4 a.menu-unfold .iconfont {
+            max-height: 17px;
+        }
+    
+        #rhpane #overlay.iconsize-4 a.menu-unfold .menu-text {
+            max-height: 17px;
+        }
+    
+        #rhpane #overlay.iconsize-3,
+        #rhpane #overlay.iconsize-2,
+        #rhpane #overlay.iconsize-1,
+        #rhpane #overlay.iconsize-0 {
+            width: inherit;
+            margin-bottom: 35px;
+        }
+    
+        #rhpane #overlay.iconsize-3::before,
+        #rhpane #overlay.iconsize-2::before,
+        #rhpane #overlay.iconsize-1::before,
+        #rhpane #overlay.iconsize-0::before {
+            top: 0;
+            bottom: 0;
+            right: -3px;
+            left: -3px;
+            height: 100%;
+            width: inherit;
+        }
+    
+        #rhpane #overlay.iconsize-3 a,
+        #rhpane #overlay.iconsize-2 a,
+        #rhpane #overlay.iconsize-1 a,
+        #rhpane #overlay.iconsize-0 a {
+            float: left;
+        }
+    
+        #rhpane #overlay.iconsize-3 a .iconfont,
+        #rhpane #overlay.iconsize-2 a .iconfont,
+        #rhpane #overlay.iconsize-1 a .iconfont,
+        #rhpane #overlay.iconsize-0 a .iconfont {
+            font-size: 14px;
+            width: 20px;
+            height: 20px;
+        }
+    
+        #rhpane #overlay.iconsize-3 a.sub-menu,
+        #rhpane #overlay.iconsize-2 a.sub-menu,
+        #rhpane #overlay.iconsize-1 a.sub-menu,
+        #rhpane #overlay.iconsize-0 a.sub-menu {
+            margin: 0.15em 0;
+        }
+    
+        #rhpane #overlay.iconsize-3 a.sub-menu:not(.menu-unfold),
+        #rhpane #overlay.iconsize-2 a.sub-menu:not(.menu-unfold),
+        #rhpane #overlay.iconsize-1 a.sub-menu:not(.menu-unfold),
+        #rhpane #overlay.iconsize-0 a.sub-menu:not(.menu-unfold),
+        #rhpane #overlay.iconsize-3 a .menu-text,
+        #rhpane #overlay.iconsize-2 a .menu-text,
+        #rhpane #overlay.iconsize-1 a .menu-text,
+        #rhpane #overlay.iconsize-0 a .menu-text {
+            display: none;
+        }
+    
+        #rhpane #overlay.iconsize-3 a:hover .menu-text,
+        #rhpane #overlay.iconsize-2 a:hover .menu-text,
+        #rhpane #overlay.iconsize-1 a:hover .menu-text,
+        #rhpane #overlay.iconsize-0 a:hover .menu-text {
+            display: block;
+            font-size: 12px;
+            text-decoration: none;
+            padding: 3px 11px;
+            right: 0;
+            top: 25px;
+        }
+    
+        #rhpane #level {
+            flex-grow: 4;
+            margin-bottom: 20px;
+            width: 25px;
+            max-height: 200px;
+            position: relative;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            align-self: flex-end;
+            opacity: 0;
+            pointer-events: none;
+        }
+    
+        .has-more-levels #rhpane #level {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    
+        #rhpane #level svg {
+            width: 100%;
+            height: 100%;
+        }
+    
+        #rhpane #level.warmer {
+            pointer-events: none;
+        }
+    
+        #rhpane #level.warmer:before {
+            pointer-events: none;
+            position: absolute;
+            content: 'More';
+            font-size: 10px;
+            bottom: -12px;
+            left: -3px;
+            transform: rotate(90deg);
+            white-space: nowrap;
+            text-shadow: 0 0 1px white;
+        }
+    
+        #rhpane #level.warmer:after {
+            pointer-events: none;
+            position: absolute;
+            content: 'Less';
+            font-size: 10px;
+            top: -14px;
+            left: -4px;
+            transform: rotate(90deg);
+            white-space: nowrap;
+            text-shadow: 0 0 1px white;
+        }
+    
+        #rhpane #level.level-submenu {
+            height: 25px;
+        }
+    
+        #rhpane #level.level-submenu:hover {
+            height: auto;
+        }
+    
+        #rhpane #level.level-submenu:before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: rgba(68, 65, 65, 0.84);
+            z-index: 0;
+        }
+    
+        #rhpane #level.level-submenu .submenu-title {
+            position: relative;
+            font-size: 12px;
+            padding: 3px 0 3px 3px;
+            width: 70px;
+            z-index: 1;
+            background-color: rgba(68, 65, 65, 0.84);
+        }
+    
+        #rhpane #level.level-submenu .submenu-title:before {
+            content: 'T';
+            position: absolute;
+            left: 55px;
+            top: 2px;
+            transform: rotate(-90deg);
+            font-size: 10px;
+            white-space: nowrap;
+            text-shadow: 0 0 1px white;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: -2px;
+            padding: 0.5em 0;
+            background-color: rgba(68, 65, 65, 0.84);
+            font-size: 11px;
+            line-height: 1;
+            width: 170px;
+            box-shadow: 0 0 4px 0 black;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content:before {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: -2px;
+            height: 2px;
+            width: 100%;
+            background-color: rgba(68, 65, 65, 0.84);
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item {
+            padding: 2px 0 2px 10px;
+            white-space: nowrap;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item span {
+            white-space: nowrap;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .iconfont {
+            font-size: 12px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .iconfont.arrow {
+            font-size: 10px;
+            padding-right: 3px;
+            position: relative;
+            left: -1px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .iconfont.bullet {
+            font-size: 12px;
+            position: relative;
+            left: -4px;
+            padding-right: 3px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .submenu-item-info {
+            position: relative;
+            top: 2px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .submenu-item-info .label {
+            font-size: 12px;
+            color: white;
+            text-transform: none;
+            white-space: nowrap;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .submenu-item-info .value {
+            font-size: 11px;
+            color: #e3e3e3;
+            text-transform: none;
+            white-space: nowrap;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item .submenu-item-info .value.iconfont {
+            font-size: 14px;
+            position: relative;
+            top: 2px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item:hover .submenu-item-info {
+            display: block;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item:hover .submenu-item-info .value {
+            font-size: 12px;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item.active .submenu-item-info .value {
+            color: #ffcc01;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item.active .submenu-item-info .value.iconfont {
+            color: #ffcc01;
+        }
+    
+        #rhpane #level.level-submenu .submenu-content .submenu-item.active .submenu-item-info .value.iconfont {
+            color: #ffcc01;
+        }
+    
+        #rhpane #levels .submenu-content ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    
+        #rhpane #levels .submenu-content ul li {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    
+        #rhpane #levels .submenu-content ul li .iconfont {
+            font-size: 10px;
+            padding-right: 3px;
+            position: relative;
+            left: -1px;
+        }
+    
+        #rhpane #levels .submenu-content ul li .label {
+            font-size: 12px;
+            color: white;
+            text-transform: none;
+            white-space: nowrap;
+        }
+    
+        #rhpane #levels .submenu-content ul li .value {
+            font-size: 11px;
+            color: #e3e3e3;
+            text-transform: none;
+            white-space: nowrap;
+        }
+    
+        #rhpane #levels .submenu-content ul li .value.iconfont {
+            font-size: 14px;
+            position: relative;
+            top: 2px;
+        }
+    
+        #rhpane #levels .submenu-content ul li:hover .value {
+            font-size: 12px;
+        }
+    
+        #rhpane #levels .submenu-content ul li.active .value {
+            color: #ffcc01;
+        }
+    
+        #rhpane #levels .submenu-content ul li.active .value.iconfont {
+            color: #ffcc01;
+        }
+    
+        #rhpane #levels .submenu-content ul li.active .value.iconfont {
+            color: #ffcc01;
+        }
+    
+        #rhpane #menu-toggler {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 5;
+            pointer-events: auto;
+        }
+    
+        #rhpane #menu-toggler.hidden {
+            display: none;
+        }
+    
+        #rhpane #menu-toggler .iconfont {
+            color: #b7b7b7;
+            font-size: 14px;
+            text-align: center;
+        }
+    
+        #rhpane #menu-toggler .iconfont:before {
+            display: block;
+        }
+    
+        .menu-open #rhpane #menu-toggler {
+            transform: rotate(90deg);
+        }
+    
+        #rhpane #menu-toggler .iconfont::before {
+            font-size: 22px;
+            margin: 0 auto;
+        }
+    
+        #plugin-rh-info .iconfont {
+            display: none;
+        }
+    
+        #plugin-rh-info .iconfont,
+        #plugin-rh-info .info-text {
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+        }
+    
+        #plugin-rh-info .info-text {
+            transition: background-color 0.3s;
+            background-color: rgba(68, 65, 65, 0.84);
+            font-size: 16px;
+            position: relative;
+            cursor: pointer;
+        }
+    
+        #plugin-rh-info .info-text span {
+            display: none;
+        }
+    
+        #plugin-rh-info .info-text span.open {
+            display: inline;
+        }
+    
+        #plugin-rh-info .info-text.open {
+            font-size: 12px;
+        }
+    
+        #plugin-rh-info .info-text::before {
+            content: '?';
+            position: absolute;
+            font-size: 18px;
+            top: 3px;
+            left: 3px;
+            font-weight: bold;
+            text-shadow: 0px 0px 4px black;
+            display: block;
+        }
+    
+        #plugin-rh-info .info-text.open::before {
+            content: 'i';
+            font-size: 20px;
+            top: 1px;
+            left: 2px;
+        }
+    
+        #plugin-rh-info .info-content {
+            display: none;
+            position: absolute;
+            top: 25px;
+            right: -4px;
+            background-color: rgba(68, 65, 65, 0.84);
+            font-size: 12px;
+            text-align: left;
+            padding: 5px 10px;
+            white-space: nowrap;
+            z-index: 10;
+            width: 300px;
+            box-shadow: 0 0 4px 0 black;
+        }
+    
+        #plugin-rh-info .info-content .info-title {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    
+        #plugin-rh-info .info-content .info-description {
+            font-size: 12px;
+        }
+    
+        #plugin-rh-info.active .info-content {
+            display: block;
+        }
+    
+        #rhpane #overlay.iconsize-0 a .iconfont {
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+        }
+    
+        #rhpane #overlay.iconsize-0 a .menu-text {
+            font-size: 11px;
+        }
+    
+        .new-label {
+            border: 1px solid rgba(68, 65, 65, 0.84);
+            font-size: 12px;
+            border-radius: 2px;
+            padding: 1px 4px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+    
+        .new-label.new-3 {
+            font-size: 9px;
+            margin-right: 3px;
+        }
+    
+        .new-label.new-3.new-right {
+            margin-right: 0;
+            margin-left: 3px;
+        }
+    
+        .new-label.new-3.new-left {
+            margin-right: 3px;
+            margin-left: 0;
+        }
+    
+        .new-label.new-4 {
+            font-size: 9px;
+            margin-right: 4px;
+        }
+    
+        /* ... (Các quy tắc CSS khác) ... */
+    </style>
+        <style id="plugin-css-patch">
+  #plugin-patch {
+    display: none !important;
+  }
+
+  #promo-obsolete-app {
+    text-shadow: 0px 0px 4px black;
+    color: white;
+    display: block;
+    line-height: 1.6;
+    text-align: center;
+    overflow: hidden;
+    letter-spacing: .1em;
+    padding: .5em 1em;
+  }
+
+  #premium-resolution-promo {
+    padding: 5px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  #premium-resolution-promo picture,
+  #premium-resolution-promo img {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+
+  #window-us-ht-promo3-desktop {
+    min-width: 500px;
+    width: calc(100vw - 200px);
+    max-width: 1000px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 800px;
+    border-radius: 15px;
+    color: white;
+    background: #4d4d4d;
+    box-shadow: 0 0 4px 0 black;
+  }
+
+  #window-us-ht-promo3-desktop .size-xxxxl {
+    font-size: 26px;
+  }
+
+  #window-us-ht-promo3-desktop .bold {
+    font-weight: bold;
+  }
+
+  #window-us-ht-promo3-desktop .closing-x {
+    display: block;
+    font-size: 30px;
+    top: -0.8em;
+  }
+
+  #window-us-ht-promo3-desktop .wn-flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #device-mobile #window-us-ht-promo3-desktop .wn-right::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.5);
+  }
+
+  #window-us-ht-promo3-desktop .wn-right h2 {
+    width: max-content;
+    padding: .25em .5em;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right ul.row {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right ul.row li {
+    background: #5a5a5a;
+    padding: .5em 1em;
+    border-radius: .5em;
+    padding: .25em .5em;
+    aspect-ratio: 1.77777778;
+    width: 100%;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right img {
+    width: 100%;
+    height: auto;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right>nav.rounded-box {
+    padding: .2em .5em;
+    border-radius: .3em;
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right>p {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right>ul {
+    margin: 0;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right>ul li {
+    margin-right: 15px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .uppercase {
+    text-transform: uppercase;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .premium-color {
+    color: #d49500;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .when-premium-hide {
+    display: flex;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .when-premium-show {
+    display: none;
+  }
+
+  .subs-premium #window-us-ht-promo3-desktop .wn-right .when-premium-hide {
+    display: none;
+  }
+
+  .subs-premium #window-us-ht-promo3-desktop .wn-right .when-premium-show {
+    display: block;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe {
+    transition: all .3s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: initial;
+    display: inline-block;
+    border-radius: 2em;
+    padding: .25em 1em;
+    margin: .5em;
+    line-height: normal;
+    position: relative;
+    border: 1px solid;
+    font-weight: 300;
+    text-align: center;
+    color: #9d0300;
+    border-color: #9d0300;
+    font-size: 20px;
+    background-color: #d49500;
+    color: white;
+    padding: 10px 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: #d49500;
+    width: auto;
+    font-weight: bold;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe:hover {
+    transform: scale(1.05, 1.05);
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe::after {
+    border-left-color: #9d0300;
+    border-bottom-color: #9d0300;
+    margin-top: -0.5em;
+    margin-left: -0.3em;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-lred {
+    color: #946051;
+    border-color: #946051;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-lred::after {
+    border-left-color: #946051;
+    border-bottom-color: #946051;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-gray {
+    color: #6b6b6b;
+    border-color: #6b6b6b;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-gray::after {
+    border-left-color: #6b6b6b;
+    border-bottom-color: #6b6b6b;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-white {
+    color: white;
+    border-color: #f8f8f8;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe.btn-white::after {
+    border-left-color: #f8f8f8;
+    border-bottom-color: #f8f8f8;
+  }
+
+  #window-us-ht-promo3-desktop .wn-right .subscribe[data-icon]::before {
+    position: relative;
+    vertical-align: middle;
+    margin-right: .3em;
+  }
+
+  #window-us-ht-promo3-desktop .wn-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 800;
+    line-height: normal;
+    width: 200px;
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-size: cover;
+    background-position-x: 45%;
+    background-position-y: center;
+    background-size: auto 100%;
+    background-image: url("https://gallery.windy.com/albums/a/hurricane-cover.jpg");
+    padding: 30px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-left .button {
+    color: white;
+    margin-top: 25px;
+  }
+
+  #window-us-ht-promo3-desktop .wn-left .icon {
+    font-size: 80px;
+  }
+
+  #device-mobile .onwindow-ushtpromomobile3 #map-container {
+    transform: scale(.93) translateY(0);
+    transform: scale(.93) translateY(var(--margin-top));
+    border-radius: 8px;
+    transform-origin: top center;
+  }
+
+  .no-css-vars #device-mobile .onwindow-ushtpromomobile3 #map-container {
+    transform: scale(.93) translateY(0);
+  }
+
+  #device-mobile .onwindow-ushtpromomobile3 #search,
+  #device-tablet .onwindow-ushtpromomobile3 #search,
+  #device-mobile .onwindow-ushtpromomobile3 #share,
+  #device-tablet .onwindow-ushtpromomobile3 #share,
+  #device-mobile .onwindow-ushtpromomobile3 #plugin-picker-mobile,
+  #device-tablet .onwindow-ushtpromomobile3 #plugin-picker-mobile,
+  #device-mobile .onwindow-ushtpromomobile3 #open-in-app,
+  #device-tablet .onwindow-ushtpromomobile3 #open-in-app,
+  #device-mobile .onwindow-ushtpromomobile3 #logo-wrapper,
+  #device-tablet .onwindow-ushtpromomobile3 #logo-wrapper,
+  #device-mobile .onwindow-ushtpromomobile3 #go-premium-mobile,
+  #device-tablet .onwindow-ushtpromomobile3 #go-premium-mobile {
+    display: none !important;
+  }
+
+  #window-ushtpromomobile3 {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: white;
+    background: #4d4d4d;
+  }
+
+  #window-ushtpromomobile3 .closing-x {
+    color: white;
+  }
+
+  #window-ushtpromomobile3 .plugin-content {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    top: 0;
+    color: white;
+    background: #4d4d4d;
+  }
+
+  #window-ushtpromomobile3 .plugin-content .premium-color {
+    color: #d49500;
+  }
+
+  #window-ushtpromomobile3 .plugin-content .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    background-image: url("https://gallery.windy.com/albums/a/Hurricane_eye-1200-x-798.png");
+    background-size: 100% auto;
+    background-position: 0 70%;
+    background-repeat: no-repeat;
+  }
+
+  #window-ushtpromomobile3 .plugin-content .header__icon {
+    font-size: 80px;
+    padding: 0 10px;
+  }
+
+  #window-ushtpromomobile3 .plugin-content .header__heading {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content {
+    display: block;
+    background: #646464;
+    padding: 0 20px 200px 20px;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content h2 {
+    font-size: 24px;
+    color: white;
+    font-weight: 700;
+    padding: 10px 0;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>nav.rounded-box {
+    padding: .2em .5em;
+    border-radius: .3em;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>p {
+    padding: 0 0 20px 0;
+    margin: 0;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>ul.row {
+    padding: 0 0 20px 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>ul.row li {
+    background: #5a5a5a;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>ul.row li.last-one {
+    margin-bottom: 0;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content>ul.row li img {
+    height: auto;
+    width: 100%;
+  }
+
+  #window-ushtpromomobile3 .plugin-content section.wn-content .uppercase {
+    text-transform: uppercase;
+  }
+
+  #window-ushtpromomobile3 .premium-color {
+    color: #d49500;
+  }
+
+  #window-ushtpromomobile3 .when-premium-hide {
+    display: flex;
+  }
+
+  #window-ushtpromomobile3 .when-premium-show {
+    display: none;
+  }
+
+  .subs-premium #window-ushtpromomobile3 .when-premium-hide {
+    display: none;
+  }
+
+  .subs-premium #window-ushtpromomobile3 .when-premium-show {
+    display: block;
+  }
+
+  .subs-premium #window-ushtpromomobile3 .plugin-content section.wn-content {
+    padding: 0 20px 20px 20px;
+  }
+
+  #window-ushtpromomobile3 .buttons {
+    box-shadow: 0 0 4px 0 black;
+    padding: .5em 1em;
+    border-radius: .5em;
+    background: #5a5a5a;
+    width: auto;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    margin-bottom: var(--margin-bottom);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    white-space: nowrap;
+    padding: 25px;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe {
+    cursor: pointer;
+    -webkit-tap-highlight-color: initial;
+    display: inline-block;
+    border-radius: 2em;
+    padding: .25em 1em;
+    margin: .5em;
+    line-height: normal;
+    position: relative;
+    border: 1px solid;
+    font-weight: 300;
+    text-align: center;
+    color: #9d0300;
+    border-color: #9d0300;
+    background-color: #d49500;
+    color: white;
+    font-size: 20px;
+    border-color: #d49500;
+    padding: 10px 20px;
+    width: 100%;
+    font-weight: 600;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe::after {
+    border-left-color: #9d0300;
+    border-bottom-color: #9d0300;
+    margin-top: -0.5em;
+    margin-left: -0.3em;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-lred {
+    color: #946051;
+    border-color: #946051;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-lred::after {
+    border-left-color: #946051;
+    border-bottom-color: #946051;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-gray {
+    color: #6b6b6b;
+    border-color: #6b6b6b;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-gray::after {
+    border-left-color: #6b6b6b;
+    border-bottom-color: #6b6b6b;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-white {
+    color: white;
+    border-color: #f8f8f8;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe.btn-white::after {
+    border-left-color: #f8f8f8;
+    border-bottom-color: #f8f8f8;
+  }
+
+  #window-ushtpromomobile3 .buttons__subscribe[data-icon]::before {
+    position: relative;
+    vertical-align: middle;
+    margin-right: .3em;
+  }
+
+  #window-ushtpromomobile3 .buttons__close {
+    cursor: pointer;
+    -webkit-tap-highlight-color: initial;
+    display: inline-block;
+    border-radius: 2em;
+    padding: .25em 1em;
+    margin: .5em;
+    line-height: normal;
+    position: relative;
+    border: 1px solid;
+    font-weight: 300;
+    text-align: center;
+    color: #9d0300;
+    border-color: #9d0300;
+    font-size: 18px;
+    padding: 10px 20px;
+    width: 100%;
+    background: transparent;
+    border: 2px solid #e5e5e5;
+    color: #e5e5e5;
+    font-weight: bold;
+  }
+
+  #window-ushtpromomobile3 .buttons__close::after {
+    border-left-color: #9d0300;
+    border-bottom-color: #9d0300;
+    margin-top: -0.5em;
+    margin-left: -0.3em;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-lred {
+    color: #946051;
+    border-color: #946051;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-lred::after {
+    border-left-color: #946051;
+    border-bottom-color: #946051;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-gray {
+    color: #6b6b6b;
+    border-color: #6b6b6b;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-gray::after {
+    border-left-color: #6b6b6b;
+    border-bottom-color: #6b6b6b;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-white {
+    color: white;
+    border-color: #f8f8f8;
+  }
+
+  #window-ushtpromomobile3 .buttons__close.btn-white::after {
+    border-left-color: #f8f8f8;
+    border-bottom-color: #f8f8f8;
+  }
+
+  #window-ushtpromomobile3 .buttons__close[data-icon]::before {
+    position: relative;
+    vertical-align: middle;
+    margin-right: .3em;
+  }
+</style>
+
+<style id="plugin-css-progress-bar">
+    #plugin-progress-bar {
+        height: 30px;
+    }
+
+    #device-desktop #plugin-progress-bar {
+        margin-bottom: 0;
+    }
+
+    #plugin-progress-bar .progress-line {
+        width: 50%;
+        z-index: 1;
+        left: 45px;
+    }
+
+    #plugin-progress-bar .timecode {
+        font-size: 13px;
+    }
+
+    #plugin-progress-bar #playpause {
+        position: absolute;
+        top: -12px;
+        left: 5px;
+        z-index: 10;
+    }
+
+    #plugin-progress-bar #calendar {
+        position: absolute;
+        left: 45px;
+        right: 0;
+        top: 6px;
+        white-space: nowrap;
+    }
+
+    #plugin-progress-bar #calendar div {
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: left;
+        padding: 6px 0 0 8px;
+        font-size: 12px;
+        line-height: 1;
+        height: 26px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    #plugin-progress-bar #calendar div:not(:first-child) {
+        border-left: 1px solid rgba(68, 65, 65, 0.84);
+    }
+</style>
+
+<script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/picker.js.tải xuống"></script>
+
+<style id="plugin-css-picker">
+    .picker .picker-drag-me:before {
+        font-family: iconfont;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+    }
+
+    .picker {
+        transition: 0.3s opacity 0s;
+        -webkit-transition: 0.3s opacity 0s;
+        font-size: 11px;
+        letter-spacing: 1px;
+        animation: fadein-full 1s;
+        opacity: 0;
+    }
+
+    .picker:focus {
+        outline: none;
+    }
+
+    .picker.open {
+        opacity: 1;
+    }
+
+    .onsearch .picker {
+        opacity: 0;
+    }
+
+    .picker .closing-x {
+        display: none;
+    }
+
+    .picker .picker-lines {
+        position: relative;
+        border-left: 2px solid rgba(68, 65, 65, 0.84);
+        height: 125px;
+        cursor: move;
+    }
+
+    .picker .picker-lines::after {
+        display: block;
+        position: absolute;
+        left: -5px;
+        top: 120.5px;
+        background-color: white;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        content: '';
+    }
+
+    .picker .picker-lines::before {
+        display: block;
+        position: absolute;
+        content: '';
+        left: -10px;
+        right: 0;
+        width: 20px;
+        height: 140px;
+    }
+
+    .picker .picker-content {
+        position: absolute;
+        left: 2px;
+        top: 0;
+        cursor: move;
+        white-space: nowrap;
+        min-height: 22px;
+        color: white;
+        background-color: rgba(68, 65, 65, 0.84);
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .picker .picker-content .p-title {
+        color: #fff3e1;
+        text-shadow: 0px 0px 4px black;
+        position: absolute;
+        top: -18px;
+        left: 0;
+    }
+
+    .picker .picker-content a {
+        color: white;
+    }
+
+    .picker .picker-content > span {
+        display: inline-block;
+        padding: 0 30px 0 10px;
+    }
+
+    .picker .picker-content > span big {
+        display: block;
+        font-size: 18px;
+    }
+
+    .picker .picker-content > span .extra-line {
+        margin-top: 3px;
+    }
+
+    .picker .picker-content i {
+        font-style: inherit;
+        color: #e4d5bd;
+        font-size: 0.8em;
+        margin-left: 10px;
+    }
+
+    .picker .picker-content i .iconfont {
+        font-size: 10px;
+        margin-left: -0.5em;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        text-align: center;
+        margin-right: 0.5em;
+        text-shadow: none;
+    }
+
+    .picker .picker-content .picker-link,
+    .picker .picker-content .picker-close-button {
+        transition: 0.3s opacity 0s;
+        -webkit-transition: 0.3s opacity 0s;
+        cursor: pointer;
+        display: block;
+        position: absolute;
+    }
+
+    .picker .picker-content .picker-close-button {
+        border: 10px solid transparent;
+        background-clip: padding-box;
+        left: calc(100% + 8px);
+        top: -10px;
+    }
+
+    .picker .picker-content .picker-close-button::before {
+        display: block;
+        font-size: 18px;
+        width: 1em;
+        height: 1em;
+        border-radius: 1em;
+        border: 0;
+        background-color: rgba(68, 65, 65, 0.84);
+    }
+
+    .picker .picker-content .picker-link {
+        font-size: 25px;
+        left: 100%;
+        width: 1em;
+        height: 1em;
+        border-radius: 1em;
+        margin-left: -0.7em;
+        bottom: 0;
+        background-color: #d49500;
+        box-shadow: 0 0 4px 0 black;
+    }
+
+    .picker .picker-content .picker-latlon {
+        position: absolute;
+        left: 10px;
+        margin-top: 10px;
+        top: 100%;
+        color: #fff3e1;
+        text-shadow: 0px 0px 4px black;
+        cursor: pointer;
+    }
+
+    .picker .picker-content .picker-link:hover {
+        opacity: 1;
+    }
+
+    .picker .picker-drag-me {
+        visibility: visible;
+        transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+        position: absolute;
+        bottom: 5px;
+        font-size: 10px;
+        color: #dedede;
+        left: -5px;
+        white-space: nowrap;
+        transform-origin: left bottom;
+        transform: rotate(-90deg);
+        -webkit-transform-origin: left bottom;
+        -webkit-transform: rotate(-90deg);
+    }
+
+    .picker .picker-drag-me:before {
+        position: relative;
+        font-size: 16px;
+        left: -3px;
+        top: -3px;
+        content: "'";
+    }
+
+    .ondetail .picker .picker-link {
+        display: none;
+    }
+</style>
+        <script type="text/javascript" async="" src="./Windy_ Wind map &amp; weather forecast_files/contextmenu.js.tải xuống"></script>
+    </head>
+    <body class="zoom3 product-ecmwf overlay-wind has-more-levels onrhpane onpatch onprogress-bar platform-desktop onpicker premium-calendar" data-user="logged-out" data-map="sznmap">
+        <div id="map" style="width: 100%; height: 500px;"></div>
+    <script>
+        // Tạo bản đồ và gắn nó vào phần tử div có id là "map"
+        var map = L.map('map').setView([51.505, -0.09], 13);
+    
+        // Thêm một lớp bản đồ nền (ví dụ: OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    
+        // Thêm một đánh dấu hoặc lớp khác vào bản đồ nếu cần
+    
+        // Chú thích: Các dòng mã này chỉ là một ví dụ đơn giản. Bạn có thể tùy chỉnh bản đồ và lớp của mình theo nhu cầu.
+    </script>   
+        <section id="map-container" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; width: 100%; height: 100%;">
+            <div id="leaflet-map" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; background-color: grey;" class="leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom">
+                <div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(4775px, -446px, 0px);">
+                    <div class="leaflet-pane leaflet-tile-pane">
+                        <div class="leaflet-layer overlay-layer"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 9; transform: translate3d(-2921px, 520px, 0px) scale(0.25);"></div>
+                        <div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 11; transform: translate3d(0px, 0px, 0px) scale(1);"><canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4293px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4037px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4293px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4037px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4293px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4037px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4549px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3781px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4549px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3781px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4293px; top: 1057px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4037px; top: 1057px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4549px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3781px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4549px; top: 1057px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3781px; top: 1057px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4805px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3525px; top: 545px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4805px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3525px; top: 801px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4805px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3525px; top: 289px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -4805px; top: 1057px;"></canvas>
+                            <canvas class="leaflet-tile leaflet-tile-loaded" height="256" width="256" style="height: 256px; width: 256px; left: -3525px; top: 1057px;"></canvas>
+                        </div>
+                    </div>
+                    <div class="leaflet-layer basemap-layer">
+                        <div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 16; transform: translate3d(-2921px, 520px, 0px) scale(0.25);"></div>
+                        <div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 1057px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 1057px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 1057px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 1057px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/3(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 545px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/4(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 801px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/2(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 289px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 1057px, 0px);">
+                            <img alt="" role="presentation" src="./Windy_ Wind map &amp; weather forecast_files/5(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 1057px, 0px);"></div>
+                        </div>
+                        <canvas class="leaflet-canvas leaflet-layer leaflet-zoom-animated particles-layer" width="1358" height="630" style="width: 1358px; height: 630px; transform: translate3d(-4775px, 446px, 0px); display: block; opacity: 1;"></canvas>
+                    </div>
+                    <div class="leaflet-pane leaflet-shadow-pane"></div>
+                    <div class="leaflet-pane leaflet-overlay-pane"></div>
+                    <div class="leaflet-pane leaflet-marker-pane">
+                        <div class="leaflet-layer labels-layer"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 11; transform: translate3d(0px, 0px, 0px) scale(1);">
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4293px, 1057px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4037px, 1057px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4549px, 1057px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3781px, 1057px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 545px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 801px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 289px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-4805px, 1057px, 0px);"></div>
+                            <div class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-3525px, 1057px, 0px);"></div>
+                        </div>
+                    </div>
+                    <div class="leaflet-marker-icon picker open leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable" tabindex="0" style="margin-left: 0px; margin-top: -125px; width: 0px; height: 125px; transform: translate3d(-4170px, 663px, 0px); z-index: 1463;">
+                        <div class="picker-lines noselect">
+
+                        </div>
+                    <div class="picker-content noselect">
+                        <span data-ref="content">
+                        <div class="p-title inlined" data-icon-after="|">Gió</div>
+                            <big data-do="changeMetric">4 
+                            <span>kt</span>
+                            <i title="Direction from, true north">
+                            <div class="iconfont" style="transform: rotate(280deg); -webkit-transform:rotate(280deg);">"</div>Tây</i>
+                            </big>
+                        </span>
+                        <a class="picker-link iconfont tooltip-down shy" data-do="detail" data-tooltip="Dự báo cho vị trí này">?</a>
+                        <a class="picker-close-button shy" data-do="rqstClose,picker" data-icon=""></a>
+                        </div>
+                    </div>
+                </div>
+<div class="leaflet-pane leaflet-tooltip-pane"></div>
+<div class="leaflet-pane leaflet-popup-pane"></div>
+<div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(1477px, 984px, 0px) scale(4);"></div>
+<div class="leaflet-control-container">
+    <div class="leaflet-top leaflet-left"></div>
+    <div class="leaflet-top leaflet-right"></div>
+    <div class="leaflet-bottom leaflet-left"></div>
+    <div class="leaflet-bottom leaflet-right">
+        <div class="leaflet-control-attribution leaflet-control">
+            <a href="http://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a>
+        </div>
+    </div>
+</div>
+</div>
+<div id="picker-dot">
+    <svg viewBox="0 0 100 100">
+        <path d="M 25,50 L 0,50 M 75,50 L 100,50" stroke-width="8"></path>
+        <path d="M 50,25 L 50,0 M 50,75 L 50,100" stroke-width="8"></path>
+        <circle cx="50" cy="50" r="4"></circle>
+    </svg>
+</div>
+</section>
+<a id="contrib" class="mobilehide" href="http://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>
+<section id="bottom-wrapper">
+    <nav id="mobile-menu">
+        <span id="icon-home" data-icon="]"></span>
+        <span data-do="rqstOpen,search" data-icon=""></span>
+        <span data-do="rqstOpen,fav-layers" data-icon="" data-plugin="fav-layers"></span>
+        <span data-do="rqstOpen,favs" id="mobile-avatar" data-icon="k"></span>
+        <div data-do="rqstOpen,menu" id="menu-burger" class="iconfont boxshadow bg-red" data-icon="d">
+            <div id="menu-warning-badge">!</div>
+        </div>
+    </nav>
+    <nav id="plugins-bottom"></nav>
+    <div id="plugins-bellow-bottom"></div>
+    <div class="metric-legend" id="legend-mobile"></div>
+</section>
+<nav id="plugins-bottom-desktop" class="shy left-border right-border">
+    <div id="plugin-progress-bar" class="plugin-bottom progress-bar open" style="display: block;">
+        <div class="progress-line" style="width: 942.938px;">
+            <div class="avbl">
+                <div class="premium" style="width: 365.137px;"></div>
+            </div>
+            <div class="played" style="width: 768px;">
+                <div class="free" style="width: 577.8px;"></div>
+            </div>
+            <i style="left: 38.61px;"></i>
+        </div>
+        <div class="timecode ghost-timecode" style="opacity: 0; left: 813px; margin-top: 0px;">
+            <div class="box">23:00&nbsp;
+                <i class="premium-flag"></i>&nbsp;&nbsp;&nbsp;</div>
+            </div>
+            <div data-title="D_LT2" class="timecode main-timecode" title="giờ địa phương" style="left: 813px;">
+                <div class="box">Thứ Tư 11 - 23:00</div>
+                <div class="loading ld-lgray size-l loader-path"></div>
+            </div>
+            <div id="playpause" class="play-pause iconfont clickable off" data-ref="playPause"></div>
+            <div id="calendar" data-ref="calendar">
+                <div data-do="1696395600000" class="uiyellow clickable" style="width: 10%;">Thứ Tư 4</div>
+                <div data-do="1696482000000" class="uiyellow clickable" style="width: 10%;">Thứ Năm 5</div>
+                <div data-do="1696568400000" class="uiyellow clickable" style="width: 10%;">Thứ Sáu 6</div>
+                <div data-do="1696654800000" class="uiyellow clickable" style="width: 10%;">Thứ Bảy 7</div>
+                <div data-do="1696741200000" class="uiyellow clickable" style="width: 10%;">Chủ Nhật 8</div>
+                <div data-do="1696827600000" class="uiyellow clickable" style="width: 10%;">Thứ Hai 9</div>
+                <div data-do="1696914000000" class="uiyellow clickable" style="width: 10%;">Thứ Ba 10</div>
+                <div data-do="1697000400000" class="uiyellow clickable" style="width: 10%;">Thứ Tư 11</div>
+                <div data-do="1697086800000" class="uiyellow clickable" style="width: 10%;">Thứ Năm 12</div>
+                <div data-do="1697173200000" class="uiyellow clickable" style="width: 10%;">Thứ Sáu 13</div></div>
+                <div class="closing-x"></div>
+            </div>
+        </nav>
+        <div id="bottom-credits" class="mobilehide inlined" data-icon-after="k" data-t="DEVELOPED">Đã phát triển với</div>
+        <span data-plugin="detail-rhpane">
+            <div id="plugin-rhpane" class="right-border top-border flex-container open">
+                <section id="rhpane" class="shy flex-container mobiletablethide">
+                    <div data-do="bcast,zoomIn" class="clickable iconfont fg-yellow zoom-ctrl zoom-plus" title="Zoom in">+</div>
+                    <div data-do="bcast,zoomOut" class="clickable iconfont fg-yellow zoom-ctrl zoom-minus" title="Zoom out">-</div>
+                    <div data-do="rqstOpen,globe" class="clickable fg-yellow zoom-ctrl globe-open mobiletablethide" title="3D mode">3D
+                        <div class="premium-flag"></div>
+                    </div>
+                    <div data-do="bcast,globeClose" class="clickable fg-yellow zoom-ctrl globe-close" title="2D mode">2D</div>
+                    <div data-do="rqstOpen,hurricanes" class="clickable fg-yellow zoom-ctrl hurricanes-open" title="Hurricanes" data-icon=""></div>
+                    <div data-do="rqstClose,hurricanes" class="clickable fg-yellow zoom-ctrl hurricanes-close" title="Hurricanes" data-icon=""></div>
+                    <nav id="overlay" data-ref="overlay" class="menu iconsize-9">
+                        <a data-do="unfold,radarSat" data-parent="isParent" class="globe-not-supported">
+                            <div class="iconfont notap">O</div>
+                            <div class="menu-text notap">Radar &amp; vệ tinh</div>
+                        </a>
+                        <a data-do="set,radar" data-parent="radarSat" class="sub-menu globe-not-supported">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Radar thời tiết</div>
+                        </a>
+                        <a data-do="set,satellite" data-parent="radarSat" class="sub-menu globe-not-supported">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Vệ tinh</div>
+                        </a>
+                        <a data-do="set,waves" data-parent="isParent">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Sóng</div>
+                        </a>
+                        <a data-do="set,swell1" data-parent="waves" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Sóng cồn</div>
+                        </a>
+                        <a data-do="set,swell2" data-parent="waves" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Sóng cồn 2</div>
+                        </a>
+                        <a data-do="set,sst" data-parent="waves" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Nhiệt độ biển</div>
+                        </a>
+                        <a data-do="unfold,airQ" data-parent="isParent">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Chất lượng không khí</div>
+                        </a>
+                        <a data-do="set,no2" data-parent="airQ" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Nitơ điôxit</div>
+                        </a>
+                        <a data-do="set,pm2p5" data-parent="airQ" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">PM2.5</div>
+                        </a>
+                        <a data-do="set,aod550" data-parent="airQ" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Sương mù</div>
+                        </a>
+                        <a data-do="set,gtco3" data-parent="airQ" class="sub-menu">
+                            <div class="iconfont notap"></div>
+                            <div class="menu-text notap">Tầng ô zôn</div>
+                        </a>
+                        <a data-do="toggleOverlays" id="ovr-menu" class="menu-unfold">
+                            <div class="iconfont notap">&lt;</div>
+                            <div class="menu-text notap">Thêm các lớp...</div>
+                        </a>
+                    </nav>
+                <div id="level" data-ref="level"><div class="timecode ghost-timecode noselect" style="opacity: 0" data-ref="GhostTimecode">
+                    <div class="box" data-ref="GhostTimecodeBox">
+                    </div>
+                </div>
+                <div class="timecode main-timecode noselect" data-ref="MainTimecode" style="top: 96.6667%; bottom: inherit;">
+                    <div class="box" data-ref="MainTimecodeBox">Bề mặt</div>
+                    <div class="loading ld-lgray size-l loader-level"></div>
+                </div>
+            </div>
+        </section>
+        <section id="rh-bottom" class="shy mobiletablethide">
+            <div id="rh-bottom-messages"></div>
+            <div class="rh-bottom__controls">
+                <div class="rh-bottom__switches">
+                    <div id="particles" data-ref="particles" class="checkbox rh-text clickable-size uiyellow" data-t="PART_ANIMATION">Ảnh động phân tử</div>
+                    <div id="isolines" data-ref="isolines" class="checkbox rh-text clickable-size uiyellow off" data-t="PRESS">Áp suất</div>
+                    <div id="radar-blitz" class="checkbox rh-text clickable-size uiyellow" data-t="BLITZ_ON">Hiển thị tia sét</div>
+                    <div id="radar-blitz-sound" class="checkbox rh-text clickable-size uiyellow" data-t="SOUND_ON">Âm thanh</div>
+                </div>
+                <div class="rh-bottom__icons">
+                    <div id="info-icon" class="rh-text" data-tooltipsrc="ABOUT_DATA" data-tooltip="Giới thiệu về những dữ liệu này">
+                        <div class="premium-info-promo" data-ref="premiumReftime"></div>
+                        <div class="clickable-size uiyellow noselect" data-do="rqstOpen,info" data-icon="L"></div>
+                    </div>
+                    <div id="fullscreen" data-ref="fullscreenEl" class="rh-text clickable-size iconfont uiyellow noselect" data-tooltipsrc="MENU_FULLSCREEN" data-tooltip="Chế độ toàn màn hình "></div>
+                </div>
+            </div>
+            <div id="pois-wrapper" class="ui-switch size-m">
+                <div id="pois-switch" data-ref="poisSwitch" class="ui-switch flex size-m notap">
+                    <div data-do="set,favs" data-tooltip="Yêu thích của tôi" class="iconfont  selected">k</div>
+                    <div data-do="set,cities" data-tooltip="Thời tiết dự báo" class="iconfont ">&amp;</div>
+                    <div data-do="set,wind" data-tooltip="Gió quan sát được" class="iconfont "></div>
+                    <div data-do="set,temp" data-tooltip="Nhiệt độ quan sát được" class="iconfont "></div>
+                    <div data-do="set,metars" data-tooltip="Sân bay" class="iconfont ">Q</div>
+                    <div data-do="set,cams" data-tooltip="Webcam" class="iconfont ">l</div>
+                    <div data-do="set,pgspots" data-tooltip="Điểm chơi dù lượn" class="iconfont "></div>
+                    <span data-do="rqstOpen,pois" class="clickable-size">Thêm các lớp...</span></div>
+                    <div id="pois-extended-checkbox" data-ref="poisExtendedCheckbox" style="display: none;"></div>
+                </div>
+                <div id="product-switch" class="fg-yellow ui-switch size-s notap" data-ref="productSwitch" data-tooltipsrc="MODEL" data-tooltip="Mô hình dự báo">
+                    <div data-do="set,ecmwf" class="i selected">ECMWF<small>9km</small></div>
+                    <div data-do="set,gfs" class="i">GFS<small>22km</small></div>
+                    <div data-do="set,bomAccess" class="i">ACCESS<small>12km</small></div>
+                    <span data-do="displayMore">1 khác...</span></div>
+                    <div id="legend" data-ref="legend" class="metric-legend noselect" data-tooltipsrc="CLICK_ON_LEGEND" data-tooltip="Nhấp để thay đổi đơn vị" data-overlay="wind" style="background: linear-gradient(to right, rgb(98, 113, 184), rgb(98, 113, 184), rgb(98, 113, 184), rgb(98, 113, 184), rgb(61, 110, 163), rgb(74, 148, 170), rgb(74, 146, 148), rgb(77, 142, 124), rgb(76, 164, 76), rgb(103, 164, 54), rgb(162, 135, 64), rgb(162, 109, 92), rgb(141, 63, 92), rgb(151, 75, 145), rgb(95, 100, 160), rgb(91, 136, 161), rgb(91, 136, 161));"><span style="width:12.5%">kt</span>
+                        <span style="width: 12.5%">0</span>
+                        <span style="width: 12.5%">5</span>
+                        <span style="width: 12.5%">10</span>
+                        <span style="width: 12.5%">20</span>
+                        <span style="width: 12.5%">30</span>
+                        <span style="width: 12.5%">40</span>
+                        <span style="width: 12.5%">60</span>
+                    </div>
+                </section>
+                <span data-plugin="detail-rplanner"></span>
+                <div class="closing-x"></div>
+            </div>
+        </span>
+        <div id="logo-wrapper" class="top-border left-border right-border">
+            <a id="logo" target="_top" class="clickable notap animated-windy-logo" data-do="bcast,back2home">
+                <div class="w-sprite"></div>
+                <img class="text" alt="Windy.com" src="./Windy_ Wind map &amp; weather forecast_files/logo-text-windycom-white.svg"></a></div>
+            <a id="open-in-app" data-do="bcast,openapp" class="open-in-app top-border desktophide boxshadow" data-t="MENU_MOBILE">Tải Xuống Ứng Dụng</a>
+            <div id="rh-top-icons" class="shy top-border right-border mobiletablethide">
+                <div id="desktop-premium-icon" data-do="rqstOpen,subscription" data-t="SUB_GO" class="premium-button size-s">Đi đến Premium</div>
+                <div id="login-button" data-do="rqstOpen,login" class="size-s" data-t="JUST_LOGIN">Đăng nhập</div>
+                <div id="user" data-plugin="user-menu"></div>
+            </div>
+            <div id="plugins" class="shy">
+                <div id="plugin-patch" style="display: block;" class="open"><div class="closing-x"></div>
+            </div>
+            <div id="plugin-picker" style="display: block;" class="open"><div class="closing-x"></div>
+        </div>
+    </div>
+    <div id="search" class="shy left-border top-border">
+        <div id="search-weather-bg">
+            <div id="search-top-wrapper">
+                <div id="menu-burger2" class="mobiletablethide tooltip-down" data-tooltipsrc="MENU" data-do="rqstOpen,tools" data-tooltip="Trình đơn">
+                    <div class="iconfont clickable-size">d</div>
+                </div>
+                <input type="text" id="q" data-placeholder="SEARCH" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="Tìm kiếm địa điểm..." class="">
+                <div id="share" class="mobiletablethide tooltip-down iconfont" data-tooltipsrc="SHARE" data-do="rqstOpen,share" data-tooltip="Chia sẻ">F</div>
+                <div id="fav" class="fav-lines shy">
+                    <div class="fav-line fav-off iconfont clickable-size tooltip-down" data-do="rqstOpen,fav-alert-menu" data-tooltipsrc="D_FAVORITES" data-tooltip="Thêm vào Mục Yêu Thích ">m</div>
+                <div class="fav-line fav-on iconfont clickable-size tooltip-down" data-do="rqstOpen,fav-alert-menu" data-tooltipsrc="D_FAVORITES2" data-tooltip="Xóa khỏi Mục Yêu Thích  ">k</div>
+                <span data-plugin="fav-alert-menu"></span>
+            </div>
+            <div id="search-my-loc" class="noselect shy iconfont">j</div>
+            <div id="cancel-search" class="iconfont"></div>
+        </div>
+        <span data-plugin="hp-weather"></span>
+    </div>
+    <div id="warnings" class="weather-box animation flex-container" style="display: none"></div>
+    <div id="articles" class="weather-box animation" style="display: none"></div>
+    <span data-plugin="search"></span>
+</div>
+<div id="unlegal-embed" class="fullscreen bg-red" style="display: none;">
+    <a href="https://www.windy.com/" class="size-xxxl" target="_top">www.windy.com</a></div><ug-extension></ug-extension>
+</body>
+</html>
