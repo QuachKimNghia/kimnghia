@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Web GIS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <style>
+        #map {
+            height: 650px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([105.25952, 9.532515], 10); // Tọa độ London
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Gửi yêu cầu API để lấy dữ liệu về Gió
+        axios.get('https://api.openweathermap.org/data/2.5/weather?q=London&appid=e7c23789a8d0f7b2f83a705260a08489')
+            .then(function (response) {
+                var windSpeed = response.data.wind.speed;
+                // Tạo marker để hiển thị thông tin về Gió
+                var windMarker = L.marker([105.25952, 9.532515]) // Tọa độ London
+                    .bindPopup('Wind Speed: ' + windSpeed + ' m/s')
+                    .addTo(map);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
+        // Gửi yêu cầu API để lấy dữ liệu về Sóng biển
+        axios.get('https://api.openweathermap.org/data/2.5/forecast?q=London&appid=e7c23789a8d0f7b2f83a705260a08489')
+            .then(function (response) {
+                var waveHeight = response.data.list[0].main.sea_level;
+                // Tạo marker để hiển thị thông tin về Sóng biển
+                var waveMarker = L.marker([105.25952, 9.532515]) // Tọa độ London
+                    .bindPopup('Wave Height: ' + waveHeight + ' m')
+                    .addTo(map);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
